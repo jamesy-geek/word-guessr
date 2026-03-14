@@ -49,9 +49,11 @@ let currentHint = "";
 let triesLeft = 6;
 let currentGuessIndex = 0;
 let isGameOver = false;
+let letterStatus = {}; // { 'A': 'correct', 'B': 'absent', ... }
 
 // DOM Elements
 const grid = document.getElementById('wordle-grid');
+const keyboardContainer = document.getElementById('virtual-keyboard');
 const guessInput = document.getElementById('guess-input');
 const guessBtn = document.getElementById('guess-btn');
 const triesCount = document.getElementById('tries-count');
@@ -60,6 +62,59 @@ const difficultySelect = document.getElementById('difficulty');
 const newGameBtn = document.getElementById('new-game-btn');
 const hintDisplay = document.getElementById('hint-display');
 const revealHintBtn = document.getElementById('reveal-hint-btn');
+
+// keyboard layout rows
+const keyboardLayout = [
+    "QWERTYUIOP".split(""),
+    "ASDFGHJKL".split(""),
+    ["ENTER", ..."ZXCVBNM".split(""), "BACK"]
+];
+
+function createKeyboard() {
+    keyboardContainer.innerHTML = "";
+    keyboardLayout.forEach(row => {
+        const rowEl = document.createElement('div');
+        rowEl.className = 'keyboard-row';
+        row.forEach(key => {
+            const btn = document.createElement('button');
+            btn.className = 'key';
+            if (key === "ENTER" || key === "BACK") btn.classList.add('wide');
+            btn.textContent = key;
+            btn.id = `key-${key}`;
+            btn.onclick = () => handleKeyClick(key);
+            
+            // Check status
+            if (letterStatus[key]) btn.classList.add(letterStatus[key]);
+            
+            rowEl.appendChild(btn);
+        });
+        keyboardContainer.appendChild(rowEl);
+    });
+}
+
+function handleKeyClick(key) {
+    if (isGameOver) return;
+    if (key === "ENTER") {
+        handleGuess();
+    } else if (key === "BACK") {
+        guessInput.value = guessInput.value.slice(0, -1);
+    } else {
+        if (guessInput.value.length < currentWord.length) {
+            guessInput.value += key;
+        }
+    }
+}
+
+function updateKeyboard() {
+    // We only call this when we want to update the UI classes
+    for (let letter in letterStatus) {
+        const btn = document.getElementById(`key-${letter}`);
+        if (btn) {
+            btn.classList.remove('correct', 'present', 'absent');
+            btn.classList.add(letterStatus[letter]);
+        }
+    }
+}
 
 // --- Wordle Logic ---
 function initGame() {
@@ -72,6 +127,7 @@ function initGame() {
     triesLeft = 6;
     currentGuessIndex = 0;
     isGameOver = false;
+    letterStatus = {}; // Reset letters
     
     gameMessage.textContent = "";
     gameMessage.className = "message-box";
@@ -88,6 +144,7 @@ function initGame() {
     revealHintBtn.classList.remove('hidden');
 
     createGrid();
+    createKeyboard();
 }
 
 function createGrid() {
@@ -125,6 +182,7 @@ function handleGuess() {
     for (let i = 0; i < currentWord.length; i++) {
         if (guessArr[i] === wordArr[i]) {
             status[i] = 'correct';
+            letterStatus[guessArr[i]] = 'correct'; // Update keyboard status
             wordArr[i] = null;
         }
     }
@@ -135,7 +193,16 @@ function handleGuess() {
         const index = wordArr.indexOf(guessArr[i]);
         if (index !== -1) {
             status[i] = 'present';
+            // Only update keyboard to 'present' if it's not already 'correct'
+            if (letterStatus[guessArr[i]] !== 'correct') {
+                letterStatus[guessArr[i]] = 'present';
+            }
             wordArr[index] = null;
+        } else {
+            // Absent
+            if (!letterStatus[guessArr[i]]) {
+                letterStatus[guessArr[i]] = 'absent';
+            }
         }
     }
 
@@ -144,6 +211,10 @@ function handleGuess() {
         setTimeout(() => {
             tiles[i].textContent = letter;
             tiles[i].classList.add(status[i]);
+            // Also update keyboard colors periodically or at the end
+            if (i === guessArr.length - 1) {
+                updateKeyboard();
+            }
         }, i * 100);
     });
 
@@ -178,6 +249,7 @@ function endGame(win) {
         gameMessage.className = "message-box error";
     }
 }
+
 
 // --- Status & Meta ---
 function updatePlayerStats(gainedXp) {

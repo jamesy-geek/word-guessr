@@ -10,9 +10,10 @@ Welcome to **The Scribe's Scroll**, a vintage-themed word puzzle game and quest 
 
 ## 🎮 Game Rules (Wordle System)
 Instead of guessing individual letters, you must decipher entire **Scripts** (Words).
-- **Gold Tiles**: The letter is in the correct position.
-- **Sepia Tiles**: The letter exists in the script but is in the wrong position.
-- **Ink-Faded Tiles**: The letter does not exist in the script.
+- **Gold Tiles/Keys**: The letter is in the correct position.
+- **Sepia Tiles/Keys**: The letter exists in the script but is in the wrong position.
+- **Ink-Faded Tiles/Keys**: The letter does not exist in the script.
+- **Virtual Keyboard**: An interactive keyboard reflects your progress, showing which letters have been cast and their accuracy.
 - **Attempts**: You have 6 attempts to solve the puzzle.
 - **Difficulties**:
   - **Novice**: 4-letter words.
