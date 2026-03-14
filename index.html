@@ -39,8 +39,14 @@
                 </div>
 
                 <header>
-                    <h1 id="main-title">The Scribe's Scroll</h1>
-                    <p class="tagline">Challenge thy wit and record thy deeds.</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="width: 40px;"></div> <!-- Spacer -->
+                        <div>
+                            <h1 id="main-title">The Scribe's Scroll</h1>
+                            <p class="tagline">Challenge thy wit and record thy deeds.</p>
+                        </div>
+                        <button id="stats-btn" class="ink-btn-small" style="margin: 0;" title="View Chronicles">Stats</button>
+                    </div>
                 </header>
 
                 <nav class="tabs">
@@ -56,7 +62,14 @@
                             <option value="medium" selected>Scholar (5-6 letters)</option>
                             <option value="hard">Sage (7+ letters)</option>
                         </select>
+                        <label class="hardcore-label" title="60 seconds to solve!">
+                            <input type="checkbox" id="hardcore-toggle"> Hardcore
+                        </label>
                         <button id="new-game-btn" class="ink-btn">New Word</button>
+                    </div>
+                    
+                    <div id="timer-display" class="timer-display hidden">
+                        <span id="time-remaining">60s</span>
                     </div>
 
                     <div id="game-board">
@@ -83,6 +96,11 @@
                         </div>
                     </div>
                     <div id="game-message" class="message-box"></div>
+                    <div id="definition-box" class="definition-box hidden">
+                        <h3 id="def-word"></h3>
+                        <p id="def-speech" class="part-of-speech"></p>
+                        <p id="def-meaning"></p>
+                    </div>
                 </section>
 
                 <section id="todo-section" class="tab-content hidden">
@@ -104,6 +122,32 @@
 
             <div class="scroll-bottom"></div>
         </main>
+        
+        <!-- Stats Modal -->
+        <div id="stats-modal" class="modal hidden">
+            <div class="modal-content parchment-body">
+                <span class="close-modal" id="close-stats">&times;</span>
+                <h2>The Scribe's Chronicles</h2>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-value" id="stat-played">0</div>
+                        <div class="stat-label">Played</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="stat-winpct">0%</div>
+                        <div class="stat-label">Win %</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="stat-streak">0</div>
+                        <div class="stat-label">Current Streak</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="stat-maxstreak">0</div>
+                        <div class="stat-label">Max Streak</div>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <footer class="vintage-footer">
             <p>&copy; 1422 Scribe's Guild | No Purple Permitted</p>
