@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Scribe's Scroll | Word Guessr & Quests</title>
+    <meta name="description" content="A vintage-themed word guessing game and quest log, designed for the modern scribe.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=MedievalSharp&family=Special+Elite&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="desk">
+        <div class="candle-glow"></div>
+        
+        <main class="scroll-container">
+            <div class="scroll-top"></div>
+            
+            <div class="parchment-body">
+                <div id="ink-bottle" class="ink-bottle" title="Dip thy quill for good fortune"></div>
+                <div id="wisdom-seal" class="wisdom-seal hidden">
+                    <div class="seal-content">
+                        <p id="wisdom-text">"Patience is the pen of the wise."</p>
+                    </div>
+                </div>
+
+                <div class="player-status">
+                    <div class="status-item">
+                        <span class="label">Rank:</span>
+                        <span id="player-rank" class="value">Initiate Scribe</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">XP:</span>
+                        <div class="xp-bar-container">
+                            <div id="xp-bar" class="xp-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <header>
+                    <h1 id="main-title">The Scribe's Scroll</h1>
+                    <p class="tagline">Challenge thy wit and record thy deeds.</p>
+                </header>
+
+                <nav class="tabs">
+                    <button id="tab-game" class="active">Word Guessr</button>
+                    <button id="tab-todo">Quest Log</button>
+                </nav>
+
+                <section id="game-section" class="tab-content">
+                    <div class="level-selector">
+                        <label for="difficulty">Level of Difficulty:</label>
+                        <select id="difficulty">
+                            <option value="easy">Novice (3-4 letters)</option>
+                            <option value="medium" selected>Scholar (5-6 letters)</option>
+                            <option value="hard">Sage (7+ letters)</option>
+                        </select>
+                        <button id="new-game-btn" class="ink-btn">New Word</button>
+                    </div>
+
+                    <div id="game-board">
+                        <div id="hint-area" class="hint-region">
+                            <button id="reveal-hint-btn" class="ink-btn-small">Seek a Hint (-5 XP)</button>
+                            <p id="hint-display" class="hint-text hidden"></p>
+                        </div>
+                        <div id="word-display" class="mystery-word"></div>
+                        <div class="input-area">
+                            <input type="text" id="guess-input" maxlength="1" placeholder="?">
+                            <button id="guess-btn" class="ink-btn">Cast Guess</button>
+                        </div>
+                        <div class="game-stats">
+                            <p>Tries Remaining: <span id="tries-count">10</span></p>
+                            <p>Mistakes: <span id="mistakes-list"></span></p>
+                        </div>
+                    </div>
+                    <div id="game-message" class="message-box"></div>
+                </section>
+
+                <section id="todo-section" class="tab-content hidden">
+                    <div class="todo-header">
+                        <h2>Daily Quests</h2>
+                        <div class="todo-input-group">
+                            <input type="text" id="todo-input" placeholder="Enter a new quest...">
+                            <button id="add-todo-btn" class="ink-btn">+</button>
+                        </div>
+                    </div>
+                    <ul id="todo-list" class="parchment-list">
+                        <!-- Tasks go here -->
+                    </ul>
+                    <div class="todo-meta">
+                        <span id="quests-remaining">0 Quests Outstanding</span>
+                    </div>
+                </section>
+            </div>
+
+            <div class="scroll-bottom"></div>
+        </main>
+        
+        <footer class="vintage-footer">
+            <p>&copy; 1422 Scribe's Guild | No Purple Permitted</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
