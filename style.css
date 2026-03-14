@@ -362,13 +362,52 @@ select {
     animation: fadeIn 0.5s ease;
 }
 
-.mystery-word {
+.wordle-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 30px auto;
+    max-width: fit-content;
+}
+
+.wordle-row {
+    display: flex;
+    gap: 8px;
+}
+
+.wordle-tile {
+    width: 60px;
+    height: 60px;
+    border: 2px solid var(--sepia-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
     font-family: 'Special Elite', cursive;
-    font-size: 3.5rem;
-    text-align: center;
-    letter-spacing: 15px;
-    margin: 40px 0;
-    min-height: 4.5rem;
+    text-transform: uppercase;
+    transition: all 0.4s ease;
+    background: rgba(255,255,255,0.2);
+}
+
+/* Wordle States - Theme Consistent */
+.wordle-tile.correct {
+    background: var(--gold);
+    border-color: var(--burnt-umber);
+    color: var(--ink);
+    transform: rotateY(360deg);
+}
+
+.wordle-tile.present {
+    background: var(--sepia-light);
+    border-color: var(--sepia-dark);
+    color: var(--ink);
+}
+
+.wordle-tile.absent {
+    background: rgba(0,0,0,0.1);
+    border-color: rgba(0,0,0,0.2);
+    opacity: 0.6;
 }
 
 .input-area {
@@ -379,22 +418,31 @@ select {
 }
 
 #guess-input {
-    width: 60px;
-    height: 60px;
+    width: 250px;
+    height: 50px;
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.2rem;
     font-family: 'Special Elite', cursive;
     background: transparent;
-    border: 2px solid var(--sepia-dark);
-    border-radius: 8px;
+    border: none;
+    border-bottom: 2px solid var(--sepia-dark);
     text-transform: uppercase;
+    letter-spacing: 5px;
+}
+
+#guess-input:focus {
+    outline: none;
+    border-bottom-color: var(--gold);
 }
 
 .game-stats {
     text-align: center;
     font-family: 'Special Elite', cursive;
-    line-height: 1.8;
+    margin-top: 20px;
 }
+
+/* Delete old mystery-word if it exists */
+.mystery-word { display: none; }
 
 #mistakes-list {
     color: var(--error-red);
